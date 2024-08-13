@@ -8,7 +8,6 @@ on:
 
 jobs:
     analyze:
-    name: Security Scan
     runs-on: ubuntu-latest
     permissions:
       actions: read
