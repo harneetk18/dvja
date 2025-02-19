@@ -17,8 +17,8 @@ jobs:
 
       - name: Install Python
         uses: actions/setup-python@v2
-        with:
-          python-version:'3.x'
+        with: 
+          python-version: '3.x'
 
       - name: Install TruffleHog
         run: pip install truffleHog
@@ -44,4 +44,3 @@ jobs:
         with:
           name: trufflehog-report.html
           path: trufflehog-report.html
-    
