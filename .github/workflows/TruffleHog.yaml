@@ -8,40 +8,40 @@ on:
 
 jobs:
   trufflehog:
-  name: Run TruffleHog
-  runs-on: ubuntu-latest
+    name: Run TruffleHog
+    runs-on: ubuntu-latest
 
-steps:
-- name: Checkout Repository
-  uses: actions/checkout@v2
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-- name: Install Python
-  uses: actions/setup-python@v2
-  with:
-   python-version:'3.x'
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version:'3.x'
 
-- name: Install TruffleHog
-  run: pip install truffleHog
+      - name: Install TruffleHog
+        run: pip install truffleHog
 
-- name: run TruffleHog Scan
-    run:|
-   trufflehog git --json .> trufflehog-report.json || true
+      - name: run TruffleHog Scan
+        run: |
+            trufflehog git --json .> trufflehog-report.json || true
 
-- name: Convert TruffleHog JSON Report to HTML
-    run:|
-    echo "<html"><body><h1>TruffleHog Report</h1><pre>" trufflehog-report.html
-    cat trufflehog-report.json >> trufflehog-report.html
-    echo "</pre><body></html>">> trufflehog-report.html
+      - name: Convert TruffleHog JSON Report to HTML
+        run: |
+          echo "<html"><body><h1>TruffleHog Report</h1><pre>" trufflehog-report.html
+          cat trufflehog-report.json >> trufflehog-report.html
+          echo "</pre><body></html>">> trufflehog-report.html
 
-- name: Upload TruffleHog JSON Report
-  uses: actions/upload-artifacts@v4
-  with:
-    name: trufflehog-report-json
-    path: trufflehog-report.json
+      - name: Upload TruffleHog JSON Report
+        uses: actions/upload-artifacts@v4
+        with:
+          name: trufflehog-report-json
+          path: trufflehog-report.json
 
-- name: Upload TruffleHog HTML report
-  uses: actions/upload-artifacts@v4
-  with:
-    name: trufflehog-report.html
-    path: trufflehog-report.html
+      - name: Upload TruffleHog HTML report
+        uses: actions/upload-artifacts@v4
+        with:
+          name: trufflehog-report.html
+          path: trufflehog-report.html
     
