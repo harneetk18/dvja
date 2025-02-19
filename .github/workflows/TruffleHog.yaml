@@ -35,13 +35,13 @@ steps:
 
 - name: Upload TruffleHog JSON Report
   uses: actions/upload-artifacts@v4
-    with:
+  with:
     name: trufflehog-report-json
     path: trufflehog-report.json
 
 - name: Upload TruffleHog HTML report
   uses: actions/upload-artifacts@v4
-    with:
+  with:
     name: trufflehog-report.html
     path: trufflehog-report.html
     
