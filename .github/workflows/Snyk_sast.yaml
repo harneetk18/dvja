@@ -36,13 +36,13 @@ jobs:
         run: snyk-to-html -i snyk-code-report.json -o snyk-code-report.html
  
       - name: Upload Snyk JSON Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: snyk-code-report-json
           path: snyk-code-report.json
  
       - name: Upload Snyk HTML Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: snyk-code-report-html
           path: snyk-code-report.html
@@ -54,13 +54,13 @@ jobs:
         run: snyk-to-html -i snyk-sca-report.json -o snyk-sca-report.html
  
       - name: Upload Snyk SCA JSON Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: snyk-sca-report-json
           path: snyk-sca-report.json
  
       - name: Upload Snyk SCA HTML Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: snyk-sca-report-html
           path: snyk-sca-report.html
