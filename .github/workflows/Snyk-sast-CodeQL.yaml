@@ -10,6 +10,9 @@ jobs:
   security_scan:
     name: Run Snyk & CodeQL Security Scan
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: [javascript, python, java] 
 
     steps:
       - name: Checkout Repository
@@ -63,7 +66,7 @@ jobs:
           languages: ${{ matrix.language }} 
           
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
+        uses: github/codeql-action/autobuild@v3
 
       - name: Run CodeQL Analysis
         uses: github/codeql-action/analyze@v3
