@@ -21,7 +21,7 @@ jobs:
           node-version: '14'
 
       - name: Install Snyk CLI
-        run: npm install -g snyk
+        run: npm install -g snyk snyk-to-html
 
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
