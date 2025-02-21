@@ -1,0 +1,77 @@
+name: Security Scanning
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+ 
+jobs:
+  security_scan:
+    name: Run Snyk & CodeQL Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Set up Node.js (required for Snyk)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install Snyk CLI
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      # Authenticate with Snyk
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      # Run Snyk SAST Security Test
+      - name: Run Snyk Code Test
+        run: |
+          snyk code test --json > snyk-code-report.json || true
+
+      # Convert Snyk JSON Report to HTML
+      - name: Convert Snyk Report to HTML
+        run: snyk-to-html -i snyk-code-report.json -o snyk-code-report.html
+
+      # Upload Snyk JSON Report
+      - name: Upload Snyk JSON Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: snyk-code-report-json
+          path: snyk-code-report.json
+
+      # Upload Snyk HTML Report
+      - name: Upload Snyk HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: snyk-code-report-html
+          path: snyk-code-report.html
+
+  codeql_scan:
+    name: Run GitHub CodeQL Scan
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      # Checkout the code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Initialize CodeQL
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript, python  # Add more languages if needed
+
+      # Run CodeQL Analysis
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
